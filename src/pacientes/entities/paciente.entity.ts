@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Plano } from '../../planos/entities/plano.entity';
 
 @Entity({ name: 'pacientes' }) 
 export class Paciente {
@@ -19,4 +20,7 @@ export class Paciente {
 
   @Column()
   sintomas: string;
+
+  @OneToMany(() => Plano, (plano) => plano.paciente)
+  planos: Plano[];
 }

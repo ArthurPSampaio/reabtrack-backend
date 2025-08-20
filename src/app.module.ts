@@ -4,15 +4,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PacientesModule } from './pacientes/pacientes.module';
+import { PlanosModule } from './planos/planos.module';
 
 @Module({
   imports: [
-    // Carrega as variáveis do arquivo .env
     ConfigModule.forRoot({
-      isGlobal: true, // Torna as variáveis disponíveis globalmente
+      isGlobal: true, 
     }),
 
-    // Configuração do TypeORM usando as variáveis de ambiente
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -25,6 +24,8 @@ import { PacientesModule } from './pacientes/pacientes.module';
     }),
 
     PacientesModule,
+
+    PlanosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
