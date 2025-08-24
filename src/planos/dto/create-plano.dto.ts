@@ -14,6 +14,10 @@ import {
   import { TipoAtividade } from '../entities/atividade.entity';
   
   class CreateAtividadeDto {
+    @IsUUID()
+    @IsOptional()
+    id?: string;
+
     @IsString()
     @IsNotEmpty()
     nome: string;

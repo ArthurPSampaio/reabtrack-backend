@@ -1,6 +1,7 @@
-import { Controller, Post, Body, Param, Get } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, Patch, HttpCode, Delete } from '@nestjs/common';
 import { PlanosService } from './planos.service';
 import { CreatePlanoDto } from './dto/create-plano.dto';
+import { UpdatePlanoDto } from './dto/update-planos.dto';
 
 @Controller('planos')
 export class PlanosController {
@@ -24,5 +25,16 @@ export class PlanosController {
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.planosService.findOne(id);
+    }
+
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() updatePlanoDto: UpdatePlanoDto) {
+        return this.planosService.update(id, updatePlanoDto);
+    }
+
+    @Delete(':id')
+    @HttpCode(204)
+    remove(@Param('id') id: string) {
+        return this.planosService.remove(id);
     }
 }
