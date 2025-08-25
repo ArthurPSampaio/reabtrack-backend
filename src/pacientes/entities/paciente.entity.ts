@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Plano } from '../../planos/entities/plano.entity';
+import { Registro } from 'src/registros/entities/registro.entity';
 
 @Entity({ name: 'pacientes' }) 
 export class Paciente {
@@ -23,4 +24,7 @@ export class Paciente {
 
   @OneToMany(() => Plano, (plano) => plano.paciente)
   planos: Plano[];
+
+  @OneToMany(() => Registro, (registro) => registro.paciente)
+  registros: Registro[];
 }

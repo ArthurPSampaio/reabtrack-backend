@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Atividade } from './atividade.entity';
+import { Registro } from 'src/registros/entities/registro.entity';
 
 export enum StatusPlano {
   ATIVO = 'Ativo',
@@ -40,4 +41,7 @@ export class Plano {
 
   @OneToMany(() => Atividade, (atividade) => atividade.plano, { cascade: true })
   atividades: Atividade[];
+
+  @OneToMany(() => Registro, (registro) => registro.plano)
+  registros: Registro[];
 }
