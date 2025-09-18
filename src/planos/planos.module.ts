@@ -9,6 +9,7 @@ import { PacientesModule } from 'src/pacientes/pacientes.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Plano, Atividade]), PacientesModule],
   controllers: [PlanosController],
-  providers: [PlanosService]
+  providers: [PlanosService],
+  exports: [PlanosService]
 })
 export class PlanosModule {}

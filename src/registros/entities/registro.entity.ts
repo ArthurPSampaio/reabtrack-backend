@@ -13,7 +13,11 @@ export class Registro {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @CreateDateColumn({ name: 'data_sessao' })
+  @Column({
+    type: 'timestamp with time zone',
+    name: 'data_sessao',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   dataSessao: Date;
 
   @Column({ type: 'int', nullable: true })
@@ -41,7 +45,6 @@ export class Registro {
   paciente: Paciente;
 
   @ManyToOne(() => Plano, (plano) => plano.registros, {
-    nullable: true,
     eager: true,
   })
   plano: Plano;

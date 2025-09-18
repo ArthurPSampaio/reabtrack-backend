@@ -13,6 +13,7 @@ import { PacientesModule } from 'src/pacientes/pacientes.module';
     PacientesModule,
   ],
   controllers: [RegistrosController],
-  providers: [RegistrosService]
+  providers: [RegistrosService],
+  exports: [RegistrosService]
 })
 export class RegistrosModule {}
