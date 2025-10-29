@@ -29,7 +29,6 @@ export class RegistrosService {
     const plano = await this.planosService.findOne(planoId);
 
     if (plano.paciente.id !== pacienteId) {
-      // aqui é regra de negócio, então BadRequest faz mais sentido do que NotFound
       throw new BadRequestException(
         `O plano ${planoId} não pertence ao paciente ${pacienteId}.`,
       );
