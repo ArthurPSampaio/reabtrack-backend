@@ -1,6 +1,8 @@
 import {
   BadRequestException,
   Injectable,
+  Inject,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,22 +12,26 @@ import { Repository } from 'typeorm';
 import { CreateRegistroDto } from './dto/create-registro.dto';
 import { Registro } from './entities/registro.entity';
 import { UpdateRegistroDto } from './dto/update-registro.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class RegistrosService {
+  private readonly logger = new Logger(RegistrosService.name);
+
   constructor(
     @InjectRepository(Registro)
     private readonly registrosRepository: Repository<Registro>,
 
     private readonly pacientesService: PacientesService,
     private readonly planosService: PlanosService,
+
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async create(createRegistroDto: CreateRegistroDto): Promise<Registro> {
     const { pacienteId, planoId, ...dadosDoRegistro } = createRegistroDto;
 
     const paciente = await this.pacientesService.findOne(pacienteId);
-
     const plano = await this.planosService.findOne(planoId);
 
     if (plano.paciente.id !== pacienteId) {
@@ -44,7 +50,12 @@ export class RegistrosService {
     };
 
     const novoRegistro = this.registrosRepository.create(dadosNovoRegistro);
-    return this.registrosRepository.save(novoRegistro);
+    const registroSalvo = await this.registrosRepository.save(novoRegistro);
+
+    this.eventEmitter.emit('registro.created', registroSalvo);
+    this.logger.log(`Evento 'registro.created' emitido para ${registroSalvo.id}`);
+
+    return registroSalvo;
   }
 
   findAll(): Promise<Registro[]> {

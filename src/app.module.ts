@@ -7,9 +7,12 @@ import { PacientesModule } from './pacientes/pacientes.module';
 import { PlanosModule } from './planos/planos.module';
 import { RegistrosModule } from './registros/registros.module';
 import { AgendaModule } from './agenda/agenda.module';
+import { AiModule } from './ai/ai.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true, 
     }),
@@ -32,6 +35,8 @@ import { AgendaModule } from './agenda/agenda.module';
     RegistrosModule,
 
     AgendaModule,
+
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
