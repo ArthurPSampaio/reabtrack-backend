@@ -3,15 +3,20 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PacientesModule } from './pacientes/pacientes.module';
+import { PlanosModule } from './planos/planos.module';
+import { RegistrosModule } from './registros/registros.module';
+import { AgendaModule } from './agenda/agenda.module';
+import { AiModule } from './ai/ai.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
-    // Carrega as variáveis do arquivo .env
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
-      isGlobal: true, // Torna as variáveis disponíveis globalmente
+      isGlobal: true, 
     }),
 
-    // Configuração do TypeORM usando as variáveis de ambiente
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -22,6 +27,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+
+    PacientesModule,
+
+    PlanosModule,
+
+    RegistrosModule,
+
+    AgendaModule,
+
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
