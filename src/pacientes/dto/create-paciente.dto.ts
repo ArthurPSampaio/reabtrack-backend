@@ -1,18 +1,18 @@
-import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
+import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { GeneroPaciente } from '../entities/paciente.entity';
 
 export class CreatePacienteDto {
-  @IsString() 
-  @IsNotEmpty() 
-  nome: string;
-
-  @IsInt() 
-  @Min(0) 
-  @IsNotEmpty()
-  idade: number;
-
   @IsString()
   @IsNotEmpty()
-  genero: string;
+  nome: string;
+
+  @IsDateString()
+  @IsNotEmpty()
+  dataNascimento: string;
+
+  @IsEnum(GeneroPaciente)
+  @IsNotEmpty()
+  genero: GeneroPaciente;
 
   @IsString()
   @IsNotEmpty()

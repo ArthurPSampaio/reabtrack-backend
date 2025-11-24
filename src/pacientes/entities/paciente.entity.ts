@@ -2,19 +2,24 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Plano } from '../../planos/entities/plano.entity';
 import { Registro } from 'src/registros/entities/registro.entity';
 
-@Entity({ name: 'pacientes' }) 
+export enum GeneroPaciente {
+  MASCULINO = 'Masculino',
+  FEMININO = 'Feminino',
+}
+
+@Entity({ name: 'pacientes' })
 export class Paciente {
-  @PrimaryGeneratedColumn('uuid') 
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column() 
+  @Column()
   nome: string;
 
-  @Column()
-  idade: number;
+  @Column({ type: 'date', name: 'data_nascimento' })
+  dataNascimento: Date;
 
-  @Column()
-  genero: string;
+  @Column({ type: 'enum', enum: GeneroPaciente })
+  genero: GeneroPaciente;
 
   @Column()
   diagnostico: string;
