@@ -36,7 +36,7 @@ export class Plano {
   @Column({ type: 'enum', enum: StatusPlano, default: StatusPlano.ATIVO })
   status: StatusPlano;
 
-  @ManyToOne(() => Paciente, (paciente) => paciente.planos, { eager: true })
+  @ManyToOne(() => Paciente, (paciente) => paciente.planos, { eager: true, onDelete: 'CASCADE' })
   paciente: Paciente;
 
   @OneToMany(() => Atividade, (atividade) => atividade.plano, { cascade: true })

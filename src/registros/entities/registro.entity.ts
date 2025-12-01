@@ -1,51 +1,39 @@
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Paciente } from '../../pacientes/entities/paciente.entity';
 import { Plano } from '../../planos/entities/plano.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
 
 @Entity({ name: 'registros' })
 export class Registro {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({
-    type: 'timestamp with time zone',
-    name: 'data_sessao',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
+  @Column({ name: 'data_sessao', type: 'timestamp' })
   dataSessao: Date;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ name: 'escala_dor', nullable: true })
   escalaDor: number;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ name: 'percepcao_esforco', nullable: true })
   percepcaoEsforco: number;
 
-  @Column({ default: true })
+  @Column({ name: 'conseguiu_realizar_tudo', default: false })
   conseguiuRealizarTudo: boolean;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ name: 'notas_subjetivas', type: 'text', nullable: true })
   notasSubjetivas: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ name: 'notas_objetivas', type: 'text', nullable: true })
   notasObjetivas: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ name: 'avaliacao', type: 'text', nullable: true })
   avaliacao: string;
 
-  @Column({ type: 'text', name: 'plano_proxima_sessao', nullable: true })
+  @Column({ name: 'plano_proxima_sessao', type: 'text', nullable: true })
   planoProximaSessao: string;
 
-  @ManyToOne(() => Paciente, (paciente) => paciente.registros, { eager: true })
+  @ManyToOne(() => Paciente, (paciente) => paciente.registros, { onDelete: 'CASCADE' })
   paciente: Paciente;
 
-  @ManyToOne(() => Plano, (plano) => plano.registros, {
-    eager: true,
-  })
+  @ManyToOne(() => Plano, (plano) => plano.registros, { onDelete: 'CASCADE' })
   plano: Plano;
 }
