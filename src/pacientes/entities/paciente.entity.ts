@@ -27,9 +27,9 @@ export class Paciente {
   @Column()
   sintomas: string;
 
-  @OneToMany(() => Plano, (plano) => plano.paciente)
+  @OneToMany(() => Plano, (plano) => plano.paciente, { onDelete: 'CASCADE' })
   planos: Plano[];
 
-  @OneToMany(() => Registro, (registro) => registro.paciente)
+  @OneToMany(() => Registro, (registro) => registro.paciente, { onDelete: 'CASCADE' })
   registros: Registro[];
 }

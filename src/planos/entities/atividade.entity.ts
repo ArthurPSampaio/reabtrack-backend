@@ -35,6 +35,6 @@ export class Atividade {
   @Column({ type: 'text', nullable: true })
   observacoes: string;
 
-  @ManyToOne(() => Plano, (plano) => plano.atividades)
+  @ManyToOne(() => Plano, (plano) => plano.atividades, { onDelete: 'CASCADE' })
   plano: Plano;
 }
